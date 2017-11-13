@@ -15,8 +15,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *sliderLabel;
 @property (weak, nonatomic) IBOutlet UILabel *tipLabel;
 
-@property(nonatomic, weak) id<UITextFieldDelegate> delegate;
-
 @end
 
 @implementation ViewController
@@ -24,11 +22,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.textField.delegate = self;
-    
+}
+- (IBAction)billDidChange:(id)sender {
+    [self calculateSplitAmount];
 }
 
-- (IBAction)calculateSplitAmount:(id)sender {
+- (void)calculateSplitAmount {
     NSString *tipString = @"0.15";
     NSDecimalNumber *billAmount = [NSDecimalNumber decimalNumberWithString:self.textField.text];
     NSDecimalNumber *numberOfPeople = [NSDecimalNumber decimalNumberWithString:self.sliderLabel.text];
@@ -51,6 +50,8 @@
     sliderValue = roundf(self.slider.value);
     [self.slider setValue:sliderValue animated:YES];
     self.sliderLabel.text = [NSString stringWithFormat:@"%g",self.slider.value];
+    [self calculateSplitAmount];
+    
 }
 
 
